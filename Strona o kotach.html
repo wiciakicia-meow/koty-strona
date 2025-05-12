@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Rasy kotów</title>
+  <!-- Google Fonts: Canvas Black alternative -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+ <style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Canvas Black', 'Montserrat', Arial, sans-serif;
+    background: url('https://images.unsplash.com/photo-1493673272479-a20888bcee10?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW9uc3RlcmElMjB3YWxscGFwZXJ8ZW58MHx8MHx8fDA%3D') no-repeat center center fixed;
+    background-size: cover;
+    color: #222;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  /* ...existing code... */
+</style>
+<style>
+    h1 {
+      margin-top: 40px;
+      font-size: 3em;
+      font-family: 'Canvas Black', 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(90deg, #a68b6b, #e9dbc3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      letter-spacing: 2px;
+      text-align: center;
+      font-weight: 900;
+      user-select: none;
+    }
+    .breeds-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+      margin: 40px 0 80px 0;
+      max-width: 1200px;
+      width: 100%;
+    }
+    .breed-card {
+      background: rgba(41, 53, 34, 0.85);
+      border-radius: 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      width: 260px;
+      padding: 18px 18px 10px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.15s;
+      cursor: pointer;
+      position: relative;
+    }
+    .breed-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+    }
+    .breed-img {
+      width: 180px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 2px solid #553724;
+    }
+    .breed-title {
+      font-size: 1.3em;
+      font-family: 'Canvas Black', 'Montserrat', Arial, sans-serif;
+      margin-bottom: 6px;
+      color: #9e8e7f;
+      letter-spacing: 1px;
+      text-align: center;
+      font-weight: 900;
+    }
+    .breed-info {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), padding 0.5s;
+      font-size: 1em;
+      color: #b1a595;
+      padding: 0 4px;
+      margin-top: 0;
+      opacity: 0.95;
+    }
+    .breed-card.active .breed-info {
+      max-height: 200px;
+      padding: 10px 4px 10px 4px;
+      margin-top: 8px;
+      opacity: 1;
+    }
+    .breed-emoji {
+      font-size: 1.5em;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .footer {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      font-size: 0.95em;
+      color: #2d2d2d;
+      font-family: 'Canvas Black', 'Montserrat', Arial, sans-serif;
+      opacity: 0.8;
+      letter-spacing: 1px;
+      background: rgba(255,255,255,0.7);
+      padding: 6px 18px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      z-index: 10;
+      user-select: none;
+      
+    }
+    @media (max-width: 900px) {
+      .breeds-container {
+        gap: 18px;
+      }
+      .breed-card {
+        width: 90vw;
+        max-width: 320px;
+      }
+    }
+    .cat-care-section h2 {
+  color: #f5e9d6;
+  font-size: 1.5em;
+  margin-top: 0;
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+  text-align: center;
+  font-family: 'Canvas Black', 'Montserrat', Arial, sans-serif;
+  opacity: 1; /* Always fully bright */
+}
+
+.cat-care-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cat-care-section li {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  font-size: 1.08em;
+  color: #f5e9d6;
+  opacity: 0.4; /* Dim by default */
+  transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1), transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  cursor: pointer;
+}
+
+.cat-care-section li:hover {
+  opacity: 1; /* Bright on hover */
+  transform: scale(1.13);
+}
+
+    .cat-care-section {
+  background: rgba(34, 70, 34, 0.75); /* forest green, transparent */
+  color: #f5e9d6;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  max-width: 500px;
+  margin: 0 auto 40px auto;
+  padding: 24px 32px 18px 32px;
+  text-align: left;
+  font-family: 'Canvas Black', 'Montserrat', Arial, sans-serif;
+  font-size: 1.15em;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+.cat-care-section:hover {
+  opacity: 1;
+}
+.cat-care-section h2 {
+  color: #f5e9d6;
+  font-size: 1.5em;
+  margin-top: 0;
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+  text-align: center;
+  font-family: 'Canvas Black', 'Montserrat', Arial, sans-serif;
+}
+.cat-care-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.cat-care-section li {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  font-size: 1.08em;
+  transition: color 0.3s;
+}
+.cat-care-section li span {
+  font-size: 1.3em;
+  margin-right: 10px;
+}
+  </style>
+</head>
+<body>
+  <h1>Rasy kotów</h1>
+  <div class="breeds-container">
+    <div class="breed-card">
+      <img class="breed-img" src="https://bezpiecznarodzina.pl/wp-content/uploads/2022/01/puszysty-kot-maine-coon-z-lokalizatorem-gps-locon-cat.png" alt="Maine Coon">
+      <div class="breed-title"><span class="breed-emoji"></span>Maine Coon</div>
+      <div class="breed-info">
+        <span class="breed-emoji">🧶</span> Największa rasa kota domowego.<br>
+        <span class="breed-emoji">🤎</span> Przyjazny, łagodny i inteligentny.<br>
+        <span class="breed-emoji">🦁</span> Puszysta sierść i charakterystyczny ogon.
+      </div>
+    </div>
+    <div class="breed-card">
+      <img class="breed-img" src="https://johndog.pl/wp-content/uploads/2023/05/artykul-john-dog-rasy-kotow-kot-bengalski-803x503px.jpg" alt="Bengalski">
+      <div class="breed-title"><span class="breed-emoji"></span>Bengalski</div>
+      <div class="breed-info">
+        <span class="breed-emoji">🌟</span> Egzotyczny wygląd, przypomina lamparta.<br>
+        <span class="breed-emoji">🏃‍♂️</span> Bardzo aktywny i energiczny.<br>
+        <span class="breed-emoji">💧</span> Lubi wodę!
+      </div>
+    </div>
+    <div class="breed-card">
+      <img class="breed-img" src="https://www.dolina-noteci.pl/data/include/img/news/1657711655.jpg" alt="Syjamski">
+      <div class="breed-title"><span class="breed-emoji"></span>Syjamski</div>
+      <div class="breed-info">
+        <span class="breed-emoji">🗣️</span> Bardzo rozmowny i towarzyski.<br>
+        <span class="breed-emoji">💙</span> Niebieskie oczy i kontrastowe umaszczenie.<br>
+        <span class="breed-emoji">🤗</span> Lubi być w centrum uwagi.
+      </div>
+    </div>
+    <div class="breed-card">
+      <img class="breed-img" src="https://www.zooplus.pl/magazyn/wp-content/uploads/2018/01/kot-brytyjski-krotkowlosy-z-zoltymi-oczami.jpg" alt="Brytyjski krótkowłosy">
+      <div class="breed-title"><span class="breed-emoji"></span>Brytyjski krótkowłosy</div>
+      <div class="breed-info">
+        <span class="breed-emoji">🧸</span> Miękka, pluszowa sierść.<br>
+        <span class="breed-emoji">😺</span> Spokojny i zrównoważony.<br>
+        <span class="breed-emoji">💤</span> Lubi odpoczywać.
+      </div>
+    </div>
+    <div class="breed-card">
+      <img class="breed-img" src="https://4yourpet.pl/data/include/img/news/1739188036.png" alt="Sfinks">
+      <div class="breed-title"><span class="breed-emoji"></span>Sfinks</div>
+      <div class="breed-info">
+        <span class="breed-emoji">🧖‍♂️</span> Kot bez sierści.<br>
+        <span class="breed-emoji">🔥</span> Uwielbia ciepło i przytulanie.<br>
+        <span class="breed-emoji">😻</span> Bardzo przywiązany do właściciela.
+      </div>
+    </div>
+    <div class="breed-card">
+      <img class="breed-img" src="https://media.os.fressnapf.com/cms/2020/04/Ratgeber-Rassenportrait-Norwegische_1200x527.jpg?t=seoimgsqr_527" alt="Norweski leśny">
+      <div class="breed-title"><span class="breed-emoji"></span>Norweski leśny</div>
+      <div class="breed-info">
+        <span class="breed-emoji">❄️</span> Gęsta, wodoodporna sierść.<br>
+        <span class="breed-emoji">🧗‍♂️</span> Świetny wspinacz.<br>
+        <span class="breed-emoji">🦉</span> Inteligentny i niezależny.
+      </div>
+    </div>
+    <div class="breed-card">
+      <img class="breed-img" src="https://kot-w-butach.pl/wp-content/uploads/2024/11/kot-perski.png" alt="Perski">
+      <div class="breed-title"><span class="breed-emoji"></span>Perski</div>
+      <div class="breed-info">
+        <span class="breed-emoji">💤</span> Spokojny i leniwy.<br>
+        <span class="breed-emoji">🧼</span> Wymaga regularnej pielęgnacji.<br>
+        <span class="breed-emoji">👁️</span> Duże, wyraziste oczy.
+      </div>
+    </div>
+    <div class="breed-card">
+      <img class="breed-img" src="https://kot-w-butach.pl/wp-content/uploads/2024/09/ladny-ragdoll.png" alt="Ragdoll">
+      <div class="breed-title"><span class="breed-emoji"></span>Ragdoll</div>
+      <div class="breed-info">
+        <span class="breed-emoji">🤍</span> Bardzo łagodny i przyjazny.<br>
+        <span class="breed-emoji">🛋️</span> Lubi być noszony na rękach.<br>
+        <span class="breed-emoji">😽</span> Przywiązuje się do ludzi.
+      </div>
+    </div>
+  </div>
+    <div class="cat-care-section">
+    <h2>Jak dbać o kota? 🐾</h2>
+    <ul>
+      <li><span>🥣</span> Zapewnij świeżą wodę i wysokiej jakości karmę każdego dnia.</li>
+      <li><span>🧼</span> Regularnie czyść kuwetę i dbaj o higienę kota.</li>
+      <li><span>🪥</span> Szczotkuj sierść, szczególnie u kotów długowłosych.</li>
+      <li><span>🏥</span> Odwiedzaj weterynarza na szczepienia i kontrole zdrowia.</li>
+      <li><span>🧸</span> Zadbaj o zabawki i drapak, by kot się nie nudził.</li>
+      <li><span>💤</span> Zapewnij spokojne miejsce do odpoczynku i snu.</li>
+    </ul>
+  </div>
+  <div class="footer">
+    Wiktoria Wojtkowska 3TI
+  </div>
+  <script>
+    // Slide down info on click
+    document.querySelectorAll('.breed-card').forEach(card => {
+      card.addEventListener('click', function() {
+        // Close others
+        document.querySelectorAll('.breed-card').forEach(c => {
+          if (c !== card) c.classList.remove('active');
+        });
+        // Toggle this one
+        card.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+</html>
