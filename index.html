@@ -295,7 +295,31 @@
     Wiktoria Wojtkowska 3TI
   </div>
   <script>
-  
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Dancing Cats Sound</title>
+</head>
+<body>
+    <script>
+        // URL to your newly uploaded audio file
+        const audioUrl = "https://github.com/wiciakicia-meow/koty-strona/raw/main/Dancing%20Cats%20-%20Go%20Kitty%20Go!%20-%20YouTube.flv.mp3";
+
+        // Create an audio object
+        const audio = new Audio(audioUrl);
+
+        // Add an event listener to play the sound on page click
+        document.body.addEventListener("click", () => {
+            console.log("Page clicked, attempting to play sound...");
+            audio.play().catch(error => {
+                console.error("Error playing sound:", error);
+            });
+        });
+    </script>
+</body>
+</html>
 </body>
 </html>
 </body>
